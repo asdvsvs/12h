@@ -12,11 +12,11 @@
       import {
         collection,
         addDoc,
-      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import {
         getDocs,
         deleteDoc,
         doc,
+        query,
+        where,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       // Firebase 구성 정보 설정
@@ -48,6 +48,11 @@
         let memberName = row["memberName"];
         let tmi = row["tmi"];
 
+        const result = query(
+          collection(db, "members"),
+          where("memberName", "==", memberName)
+        );
+        console.log("콘솔에 로그", result);
         let temp_html = `
           <div class="card" style="width: 18rem">
         <img src="${imageUrl}"
@@ -58,10 +63,18 @@
           <h5 class="card-title">${memberName}</h5>
           <p class="card-text">TMI : ${tmi}</p>
           <a href="#" class="btn btn-primary">수정</a>
-          <a href="#" id="deletebtn" class="btn btn-secondary">삭제</a>
+          <a href="member_introduction_page.html" id="submitData" class="btn btn-secondary">삭제</a>
         </div>
       </div>`;
         $("#card").append(temp_html);
+      });
+      const result = query(
+        collection(db, "members"),
+        where("memberName", "==", memberName)
+      );
+      submitData.addEventListener("click", (e) => {
+        deleteDoc(doc(db, "members", result));
+        alert("삭제완료");
       });
     </script>
 
@@ -106,7 +119,9 @@
         멤버 등록하기
       </button>
     </div>
+    <br />
 
+    <button type="button" id="submitData">삭제</button>
     <br />
     <div style="text-align: center">
       <button
