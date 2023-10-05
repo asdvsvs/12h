@@ -12,11 +12,11 @@
       import {
         collection,
         addDoc,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import {
         getDocs,
         deleteDoc,
         doc,
-        query,
-        where,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       // Firebase 구성 정보 설정
@@ -48,11 +48,6 @@
         let memberName = row["memberName"];
         let tmi = row["tmi"];
 
-        const result = query(
-          collection(db, "members"),
-          where("memberName", "==", memberName)
-        );
-        console.log("콘솔에 로그", result);
         let temp_html = `
           <div class="card" style="width: 18rem">
         <img src="${imageUrl}"
@@ -63,18 +58,10 @@
           <h5 class="card-title">${memberName}</h5>
           <p class="card-text">TMI : ${tmi}</p>
           <a href="#" class="btn btn-primary">수정</a>
-          <a href="member_introduction_page.html" id="submitData" class="btn btn-secondary">삭제</a>
+          <a href="#" id="deletebtn" class="btn btn-secondary">삭제</a>
         </div>
       </div>`;
         $("#card").append(temp_html);
-      });
-      const result = query(
-        collection(db, "members"),
-        where("memberName", "==", memberName)
-      );
-      submitData.addEventListener("click", (e) => {
-        deleteDoc(doc(db, "members", result));
-        alert("삭제완료");
       });
     </script>
 
@@ -83,6 +70,7 @@
         font-size: 35px;
         font-weight: 900;
       }
+
       .mysubcontent {
         background-color: beige;
         width: fit-content;
@@ -97,6 +85,7 @@
       crossorigin="anonymous"
     />
   </head>
+
   <body
     style="
       display: flex;
@@ -113,24 +102,18 @@
 
     <br />
     <div>
-      <button
-        onclick="location.href='file:///C:/Users/gag97/OneDrive/Desktop/sparta/frontend/registere_page.html'"
-      >
-        멤버 등록하기
-      </button>
+      <a href="registere_page.html">
+        <button>멤버 등록하기</button>
+      </a>
     </div>
-    <br />
 
-    <button type="button" id="submitData">삭제</button>
     <br />
     <div style="text-align: center">
-      <button
-        onclick="location.href='file:///C:/Users/gag97/OneDrive/Desktop/sparta/frontend/team_introduction_page.html'"
-        type="button"
-        style="width: 200px; height: 70px"
-      >
-        <a style="font-size: 18px"> 팀 소개 페이지로 가기 </a>
-      </button>
+      <a style="font-size: 18px" href="team_introduction_page.html">
+        <button type="button" style="width: 200px; height: 70px">
+          팀 소개 페이지
+        </button>
+      </a>
     </div>
   </body>
 </html>
