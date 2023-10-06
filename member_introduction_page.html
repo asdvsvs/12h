@@ -12,56 +12,101 @@
       import {
         collection,
         addDoc,
-      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import {
         getDocs,
         deleteDoc,
+        updateDoc,
         doc,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       // Firebase 구성 정보 설정
       const firebaseConfig = {
-        apiKey: "AIzaSyApxjU3BurTH6XuImY9_oUn3kk603w8PKc",
-        authDomain: "test-8e09e.firebaseapp.com",
-        projectId: "test-8e09e",
-        storageBucket: "test-8e09e.appspot.com",
-        messagingSenderId: "436344741102",
-        appId: "1:436344741102:web:2bae246b9e85471b7867ff",
-        measurementId: "G-KP8QWKQ6WF",
+        apiKey: "AIzaSyB8ZlRQClExexRHt9SMMeNI7ATXzt36r5M",
+        authDomain: "test-3891c.firebaseapp.com",
+        projectId: "test-3891c",
+        storageBucket: "test-3891c.appspot.com",
+        messagingSenderId: "905906486245",
+        appId: "1:905906486245:web:eab1ce69bd0a8806954d0c",
+        measurementId: "G-6ZS0EN9MMV",
       };
-
       // Firebase 인스턴스 초기화
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      $("#deletebtn").click(async function () {
-        await deleteDoc(doc(db, "members", "7pmq1qut7I3xjGQ7GYvv"));
-        alert("삭제완료");
-      });
-      // let deleteDoc = await deleteDoc(db, "members", "7pmq1qut7I3xjGQ7GYvv");
-
       let docs = await getDocs(collection(db, "members"));
-      docs.forEach((doc) => {
-        let row = doc.data();
+      docs.forEach((document) => {
+        const id = document.id;
+        let row = document.data();
         console.log(row);
         let imageUrl = row["imageUrl"];
         let memberName = row["memberName"];
         let tmi = row["tmi"];
-
         let temp_html = `
           <div class="card" style="width: 18rem">
-        <img src="${imageUrl}"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title">${memberName}</h5>
-          <p class="card-text">TMI : ${tmi}</p>
-          <a href="#" class="btn btn-primary">수정</a>
-          <a href="#" id="deletebtn" class="btn btn-secondary">삭제</a>
-        </div>
-      </div>`;
+            <img src="${imageUrl}"
+                class="card-img-top"
+               alt="..."
+              />
+              <div class="card-body" id="${id}">
+             <input id="cardId"  value="${id}">
+
+               <h5 class="card-title">${memberName}</h5>
+               <p class="card-text">TMI : ${tmi}</p>
+
+               <form>
+                <input id="inputContent"/>
+                <button type="submit" id="updateDocBtn" class="btn btn-primary">수정하기</button>
+                  </form>
+                
+               <button id="deleteDocBtn" class="btn btn-secondary">삭제</button>
+              </div>
+           </div>`;
         $("#card").append(temp_html);
+        $(`#${id} #deleteDocBtn`).on("click", (e) => {
+          console.log(id);
+          deleteDoc(doc(db, "members", id));
+          alert("삭제완료");
+        });
+      });
+      $(`#${id} #editData`).on("click", (e) => {
+        $(`#${id} #editData`).on("click", (e) => {
+          // 해당 카드의 정보 가져오기
+          let imageUrl = row["imageUrl"];
+          let memberName = row["memberName"];
+          let tmi = row["tmi"];
+          // 수정 폼의 HTML 구성
+          let editFormHtml = `
+    <div class="edit-form">
+        <input type="text" id="editImageUrl" placeholder="이미지 URL" value="${imageUrl}">
+        <input type="text" id="editMemberName" placeholder="멤버 이름" value="${memberName}">
+        <input type="text" id="editTmi" placeholder="TMI" value="${tmi}">
+        <button id="saveEdit">저장</button>
+    </div>`;
+          // 수정 폼을 해당 카드에 추가
+          $(`#${id}`).append(editFormHtml);
+          // 저장 버튼 클릭 이벤트 처리
+          $(`#${id} #saveEdit`).on("click", (e) => {
+            // 수정된 정보 가져오기
+            let editedImageUrl = $(`#${id} #editImageUrl`).val();
+            let editedMemberName = $(`#${id} #editMemberName`).val();
+            let editedTmi = $(`#${id} #editTmi`).val();
+            // Firestore에서 해당 멤버 문서를 가져와 수정
+            const memberDocRef = doc(db, "members", id);
+            setDoc(memberDocRef, {
+              imageUrl: editedImageUrl,
+              memberName: editedMemberName,
+              tmi: editedTmi,
+            })
+              .then(() => {
+                // 수정 폼 제거
+                $(`#${id} .edit-form`).remove();
+                // 페이지 새로고침 또는 다른 작업 수행
+                // 여기에 필요한 코드를 추가하세요.
+              })
+              .catch((error) => {
+                console.error("수정 실패: ", error);
+              });
+          });
+        });
       });
     </script>
 
@@ -102,10 +147,11 @@
 
     <br />
     <div>
-      <a href="registere_page.html">
+      <a href="register_page.html">
         <button>멤버 등록하기</button>
       </a>
     </div>
+    <br />
 
     <br />
     <div style="text-align: center">
