@@ -12,52 +12,53 @@
       import {
         collection,
         addDoc,
+        getDocs,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
       // Firebase 구성 정보 설정
       const firebaseConfig = {
-        apiKey: "AIzaSyApxjU3BurTH6XuImY9_oUn3kk603w8PKc",
-        authDomain: "test-8e09e.firebaseapp.com",
-        projectId: "test-8e09e",
-        storageBucket: "test-8e09e.appspot.com",
-        messagingSenderId: "436344741102",
-        appId: "1:436344741102:web:2bae246b9e85471b7867ff",
-        measurementId: "G-KP8QWKQ6WF",
+        apiKey: "AIzaSyB8ZlRQClExexRHt9SMMeNI7ATXzt36r5M",
+        authDomain: "test-3891c.firebaseapp.com",
+        projectId: "test-3891c",
+        storageBucket: "test-3891c.appspot.com",
+        messagingSenderId: "905906486245",
+        appId: "1:905906486245:web:eab1ce69bd0a8806954d0c",
+        measurementId: "G-6ZS0EN9MMV",
       };
-
       // Firebase 인스턴스 초기화
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-
-      $("#registerebtn").click(async function () {
+      $("#registerbtn").click(async function () {
         let imageUrl = $("#imageUrl").val();
         let memberName = $("#memberName").val();
         let tmi = $("#tmi").val();
-
         let doc = {
           imageUrl: imageUrl,
           memberName: memberName,
           tmi: tmi,
         };
-
         await addDoc(collection(db, "members"), doc);
         alert("등록완료");
         location.href = "member_introduction_page.html";
       });
     </script>
-
     <style>
       .mycontent {
         font-size: 35px;
         font-weight: 900;
       }
-
       .mysubcontent {
         background-color: beige;
         width: fit-content;
         font-size: 25px;
         font-weight: 500;
+      }
+      .my_register_box {
+        box-shadow: 0px 0px 3px 0px black;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .my button {
+        float: right;
       }
     </style>
     <link
@@ -67,7 +68,6 @@
       crossorigin="anonymous"
     />
   </head>
-
   <body
     style="
       display: flex;
@@ -76,11 +76,19 @@
       margin: auto;
     "
   >
-    <p style="text-align: center; font-size: 100px; color: rgb(223, 184, 111)">
+    <p
+      style="
+        text-align: center;
+        font-size: 100px;
+        color: white;
+        background-image: url('https://cdn.dribbble.com/userupload/10542730/file/original-21f6ac9da9be66a08ee1701cf8d92489.gif');
+        background-position: center;
+        background-size: cover;
+      "
+    >
       12시간 전야제
     </p>
-
-    <div class="my_registere_box">
+    <div class="my_register_box">
       <div class="form-floating mb-3">
         <input
           type="email"
@@ -88,7 +96,7 @@
           id="imageUrl"
           placeholder="사진 이미지 주소"
         />
-        <label for="registereInput">사진 이미지 주소</label>
+        <label for="registerInput">사진 이미지 주소</label>
       </div>
       <div class="form-floating mb-3">
         <input
@@ -97,17 +105,17 @@
           id="memberName"
           placeholder="이름"
         />
-        <label for="registereInput">이름</label>
+        <label for="registerInput">이름</label>
       </div>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" id="tmi" placeholder="TMI" />
-        <label for="registereInput">TMI</label>
+        <label for="registerInput">TMI</label>
       </div>
-      <button id="registerebtn" class="btn btn-primary">등록하기</button>
+      <div class="my button">
+        <button id="registerbtn" class="btn btn-primary">등록하기</button>
+      </div>
     </div>
-
     <br />
-
     <br />
     <div style="text-align: center">
       <a style="font-size: 18px" href="member_introduction_page.html">
