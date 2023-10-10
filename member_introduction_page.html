@@ -85,10 +85,10 @@
     <div class="edit-form">
         <input type="text" id="editImageUrl" placeholder="이미지 URL" value="${imageUrl}">
         <input type="text" id="editMemberName" placeholder="멤버 이름" value="${memberName}">
-        <input type="text" id="editTmi" placeholder="MBTI" value="${mbti}">
-        <input type="text" id="editTmi" placeholder="객관적 장점" value="${merit}">
-        <input type="text" id="editTmi" placeholder="협업스타일" value="${workStyle}">
-        <input type="text" id="editTmi" placeholder="Blog" value="${blog}">
+        <input type="text" id="editMbti" placeholder="MBTI" value="${mbti}">
+        <input type="text" id="editMerit" placeholder="객관적 장점" value="${merit}">
+        <input type="text" id="editWorkStyle" placeholder="협업스타일" value="${workStyle}">
+        <input type="text" id="editBlog" placeholder="Blog" value="${blog}">
         <button id="saveEdit">저장</button>
     </div>`;
                         // 수정 폼을 해당 카드에 추가
@@ -115,6 +115,8 @@
                                 .then(() => {
                                     // 수정 폼 제거
                                     $(`#${id} .edit-form`).remove();
+                                    alert('수정 완료!');
+                                    window.location.reload();
                                     // 페이지 새로고침 또는 다른 작업 수행
                                     // 여기에 필요한 코드를 추가하세요.
                                 })
