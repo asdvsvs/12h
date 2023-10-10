@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>12시간 전야제</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="module">
-      // Firebase SDK 라이브러리 가져오기
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import {
-        collection,
-        addDoc,
-        getDocs,
-        deleteDoc,
-        doc,
-        setDoc,
-      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      // Firebase 구성 정보 설정
-      const firebaseConfig = {
-        apiKey: "AIzaSyBrt7gS-nJhB7w2Bz88KXKj9ujeUHvqDcg",
-        authDomain: "test-a105e.firebaseapp.com",
-        projectId: "test-a105e",
-        storageBucket: "test-a105e.appspot.com",
-        messagingSenderId: "634537823114",
-        appId: "1:634537823114:web:391f3ef92c5662ced9d673",
-        measurementId: "G-Q0019716ZG",
-      };
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>12시간 전야제</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="module">
+            // Firebase SDK 라이브러리 가져오기
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+            import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+            import {
+                collection,
+                addDoc,
+                getDocs,
+                deleteDoc,
+                doc,
+                setDoc,
+            } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+            // Firebase 구성 정보 설정
+            const firebaseConfig = {
+                apiKey: 'AIzaSyBrt7gS-nJhB7w2Bz88KXKj9ujeUHvqDcg',
+                authDomain: 'test-a105e.firebaseapp.com',
+                projectId: 'test-a105e',
+                storageBucket: 'test-a105e.appspot.com',
+                messagingSenderId: '634537823114',
+                appId: '1:634537823114:web:391f3ef92c5662ced9d673',
+                measurementId: 'G-Q0019716ZG',
+            };
 
-      // Firebase 인스턴스 초기화
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-      // $("#deletebtn").click(async function () {
-      //   await deleteDoc(doc(db, "members", "7pmq1qut7I3xjGQ7GYvv"));
-      //   alert("삭제완료");
-      // });
-      // let deleteDoc = await deleteDoc(db, "members", "7pmq1qut7I3xjGQ7GYvv");
-      // var index = 0;
-      let docs = await getDocs(collection(db, "members"));
-      docs.forEach((document) => {
-        const id = document.id;
-        let row = document.data();
-        console.log(row);
-        let imageUrl = row["imageUrl"];
-        let memberName = row["memberName"];
-        let mbti = row["mbti"];
-        let merit = row["merit"];
-        let workStyle = row["workStyle"];
-        let blog = row["blog"];
-        let temp_html = `
+            // Firebase 인스턴스 초기화
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            // $("#deletebtn").click(async function () {
+            //   await deleteDoc(doc(db, "members", "7pmq1qut7I3xjGQ7GYvv"));
+            //   alert("삭제완료");
+            // });
+            // let deleteDoc = await deleteDoc(db, "members", "7pmq1qut7I3xjGQ7GYvv");
+            // var index = 0;
+            let docs = await getDocs(collection(db, 'members'));
+            docs.forEach((document) => {
+                const id = document.id;
+                let row = document.data();
+                console.log(row);
+                let imageUrl = row['imageUrl'];
+                let memberName = row['memberName'];
+                let mbti = row['mbti'];
+                let merit = row['merit'];
+                let workStyle = row['workStyle'];
+                let blog = row['blog'];
+                let temp_html = `
           <div class="card" style="width: 18rem">
         <img src="${imageUrl}"
           class="card-img-top"
@@ -64,23 +64,26 @@
           <button id="submitData" class="btn btn-secondary">삭제</button>
         </div>
       </div>`;
-        $("#card").append(temp_html);
-        $(`#${id} #submitData`).on("click", (e) => {
-          console.log(id);
-          deleteDoc(doc(db, "members", id));
-          alert("삭제완료");
-        });
-        $(`#${id} #editData`).on("click", (e) => {
-          $(`#${id} #editData`).on("click", (e) => {
-            // 해당 카드의 정보 가져오기
-            let imageUrl = row["imageUrl"];
-            let memberName = row["memberName"];
-            let mbti = row["mbti"];
-            let merit = row["merit"];
-            let workStyle = row["workStyle"];
-            let blog = row["blog"];
-            // 수정 폼의 HTML 구성
-            let editFormHtml = `
+                $('#card').append(temp_html);
+                $(`#${id} #submitData`).on('click', (e) => {
+                    console.log(id);
+                    deleteDoc(doc(db, 'members', id));
+                    alert('삭제완료');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 300);
+                });
+                $(`#${id} #editData`).on('click', (e) => {
+                    $(`#${id} #editData`).on('click', (e) => {
+                        // 해당 카드의 정보 가져오기
+                        let imageUrl = row['imageUrl'];
+                        let memberName = row['memberName'];
+                        let mbti = row['mbti'];
+                        let merit = row['merit'];
+                        let workStyle = row['workStyle'];
+                        let blog = row['blog'];
+                        // 수정 폼의 HTML 구성
+                        let editFormHtml = `
     <div class="edit-form">
         <input type="text" id="editImageUrl" placeholder="이미지 URL" value="${imageUrl}">
         <input type="text" id="editMemberName" placeholder="멤버 이름" value="${memberName}">
@@ -90,117 +93,104 @@
         <input type="text" id="editBlog" placeholder="Blog" value="${blog}">
         <button id="saveEdit">저장</button>
     </div>`;
-            // 수정 폼을 해당 카드에 추가
-            $(`#${id}`).append(editFormHtml);
-            // 저장 버튼 클릭 이벤트 처리
-            $(`#${id} #saveEdit`).on("click", (e) => {
-              // 수정된 정보 가져오기
-              let editedImageUrl = $(`#${id} #editImageUrl`).val();
-              let editedMemberName = $(`#${id} #editMemberName`).val();
-              let editedMbti = $(`#${id} #editMbti`).val();
-              let editedMerit = $(`#${id} #editMerit`).val();
-              let editedWorkStyle = $(`#${id} #editWorkStyle`).val();
-              let editedBlog = $(`#${id} #editBlog`).val();
-              // Firestore에서 해당 멤버 문서를 가져와 수정
-              const memberDocRef = doc(db, "members", id);
-              setDoc(memberDocRef, {
-                imageUrl: editedImageUrl,
-                memberName: editedMemberName,
-                mbti: editedMbti,
-                merit: editedMerit,
-                workStyle: editedWorkStyle,
-                blog: editedBlog,
-              })
-                .then(() => {
-                  // 수정 폼 제거
-                  $(`#${id} .edit-form`).remove();
-                  alert("수정 완료!");
-                  window.location.reload();
-                  // 페이지 새로고침 또는 다른 작업 수행
-                  // 여기에 필요한 코드를 추가하세요.
-                })
-                .catch((error) => {
-                  console.error("수정 실패: ", error);
+                        // 수정 폼을 해당 카드에 추가
+                        $(`#${id}`).append(editFormHtml);
+                        // 저장 버튼 클릭 이벤트 처리
+                        $(`#${id} #saveEdit`).on('click', (e) => {
+                            // 수정된 정보 가져오기
+                            let editedImageUrl = $(`#${id} #editImageUrl`).val();
+                            let editedMemberName = $(`#${id} #editMemberName`).val();
+                            let editedMbti = $(`#${id} #editMbti`).val();
+                            let editedMerit = $(`#${id} #editMerit`).val();
+                            let editedWorkStyle = $(`#${id} #editWorkStyle`).val();
+                            let editedBlog = $(`#${id} #editBlog`).val();
+                            // Firestore에서 해당 멤버 문서를 가져와 수정
+                            const memberDocRef = doc(db, 'members', id);
+                            setDoc(memberDocRef, {
+                                imageUrl: editedImageUrl,
+                                memberName: editedMemberName,
+                                mbti: editedMbti,
+                                merit: editedMerit,
+                                workStyle: editedWorkStyle,
+                                blog: editedBlog,
+                            })
+                                .then(() => {
+                                    // 수정 폼 제거
+                                    $(`#${id} .edit-form`).remove();
+                                    alert('수정 완료!');
+                                    window.location.reload();
+                                    // 페이지 새로고침 또는 다른 작업 수행
+                                    // 여기에 필요한 코드를 추가하세요.
+                                })
+                                .catch((error) => {
+                                    console.error('수정 실패: ', error);
+                                });
+                        });
+                    });
                 });
             });
-          });
-        });
-      });
-      // console.log(index);
-      // console.log("카드아이디는", cardId);
-      // console.log(cardId[0].value);
-    </script>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Cute+Font&family=Nanum+Pen+Script&family=Open+Sans&family=Roboto:ital,wght@1,300&family=Single+Day&family=Stylish&display=swap");
+            // console.log(index);
+            // console.log("카드아이디는", cardId);
+            // console.log(cardId[0].value);
+        </script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Nanum+Pen+Script&family=Open+Sans&family=Roboto:ital,wght@1,300&family=Single+Day&family=Stylish&display=swap');
 
-      * {
-        font-family: "Cute Font", cursive;
-      }
+            * {
+                font-family: 'Cute Font', cursive;
+            }
 
-      .line {
-        height: 20px;
-        color: white;
-        background-color: rgb(223, 184, 111);
-        text-align: right;
-        width: 1000px;
-        margin: 20px auto 20px auto;
-      }
+            .line {
+                height: 20px;
+                color: white;
+                background-color: rgb(223, 184, 111);
+                text-align: right;
+                width: 1000px;
+                margin: 20px auto 20px auto;
+            }
 
-      .cardSize {
-        width: 1100px;
-        height: 550px;
-        margin: 10px auto 10px auto;
-      }
-      .mycontent {
-        font-size: 35px;
-        font-weight: 900;
-      }
-      .mysubcontent {
-        background-color: beige;
-        width: fit-content;
-        font-size: 25px;
-        font-weight: 500;
-      }
-    </style>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body
-    style="
-      display: flex;
-      flex-direction: column;
-      max-width: fit-content;
-      margin: auto;
-    "
-  >
-    <p style="text-align: center; font-size: 100px; color: rgb(223, 184, 111)">
-      12시간 전야제
-    </p>
-    <div class="line">MEMBERS</div>
+            .cardSize {
+                width: 1100px;
+                height: 550px;
+                margin: 10px auto 10px auto;
+            }
+            .mycontent {
+                font-size: 35px;
+                font-weight: 900;
+            }
+            .mysubcontent {
+                background-color: beige;
+                width: fit-content;
+                font-size: 25px;
+                font-weight: 500;
+            }
+        </style>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body style="display: flex; flex-direction: column; max-width: fit-content; margin: auto">
+        <p style="text-align: center; font-size: 100px; color: rgb(223, 184, 111)">12시간 전야제</p>
+        <div class="line">MEMBERS</div>
 
-    <div id="card" class="row row-cols-1 row-cols-md-4 g-4"></div>
-    <div id="card" class="row row-cols-1 row-cols-md-4 g-4"></div>
-    <br />
-    <div style="text-align: center">
-      <a href="registere_page.html">
-        <button type="button" class="btn btn-outline-warning">
-          멤버 등록하기
-        </button>
-      </a>
-    </div>
-    <br />
-    <!--<button type="button" id="submitData">삭제</button>-->
-    <br />
-    <div style="text-align: center">
-      <a style="font-size: 18px" href="team_introduction_page.html">
-        <button type="button" class="btn btn-outline-warning btn-lg">
-          팀 소개 페이지 이동
-        </button>
-      </a>
-    </div>
-  </body>
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4"></div>
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4"></div>
+        <br />
+        <div style="text-align: center">
+            <a href="registere_page.html">
+                <button type="button" class="btn btn-outline-warning">멤버 등록하기</button>
+            </a>
+        </div>
+        <br />
+        <!--<button type="button" id="submitData">삭제</button>-->
+        <br />
+        <div style="text-align: center">
+            <a style="font-size: 18px" href="team_introduction_page.html">
+                <button type="button" class="btn btn-outline-warning btn-lg">팀 소개 페이지 이동</button>
+            </a>
+        </div>
+    </body>
 </html>
